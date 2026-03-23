@@ -8,4 +8,9 @@ for ((i=1; i<=FILECOUNT; i++)); do
     # get names one at a time and compile them
     ($CC $FLAGS $DEBUG "$FILE" -o "$(basename -s .c "$FILE").exe")
 done
-rm files.c # cleanup
+if ! [[ -n "$RUNCALLED" ]]; then
+    # means this was called by make and not run.sh
+    # echo "a script didn't call me"
+    rm files.c # cleanup
+    unset FILECOUNT
+fi
